@@ -1,9 +1,8 @@
 package bht.salvinto.stickynotes.domain;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
 
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 /**
  * Represents a basic note which contains a title, a description, and a creation timestamp.
@@ -17,7 +16,7 @@ public class Note {
     private String description;
 
     // records the time of creation
-    private Timestamp creationTimestamp;
+    private LocalDateTime creationTimestamp;
 
     public String getTitle() {
         return title;
@@ -35,17 +34,17 @@ public class Note {
         this.description = description;
     }
 
-    public Timestamp getCreationTimestamp() {
+    public LocalDateTime getCreationTimestamp() {
         return creationTimestamp;
     }
 
-    public void setCreationTimestamp(Timestamp creationTimestamp) {
+    public void setCreationTimestamp(LocalDateTime creationTimestamp) {
         this.creationTimestamp = creationTimestamp;
     }
 
     @Override
     public String toString() {
-        return new ToStringBuilder(this, ToStringStyle.MULTI_LINE_STYLE)
+        return new ToStringBuilder(this)
                 .append("title", getTitle())
                 .append("description", getDescription())
                 .append("creationTimestamp", getCreationTimestamp())
