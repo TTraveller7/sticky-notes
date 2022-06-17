@@ -2,10 +2,7 @@ package bht.salvinto.stickynotes.domain;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.LocalDateTime;
 
 /**
@@ -13,8 +10,9 @@ import java.time.LocalDateTime;
  * @author ttraveller7
  */
 
-@Entity
-public class Note {
+@MappedSuperclass
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+public abstract class Note {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
