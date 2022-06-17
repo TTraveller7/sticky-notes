@@ -2,13 +2,23 @@ package bht.salvinto.stickynotes.domain;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import java.time.LocalDateTime;
 
 /**
  * Represents a basic note which contains a title, a description, and a creation timestamp.
  * @author ttraveller7
  */
+
+@Entity
 public class Note {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     // title of the note. should be non-empty.
     private String title;
@@ -17,6 +27,14 @@ public class Note {
 
     // records the time of creation
     private LocalDateTime creationTimestamp;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public String getTitle() {
         return title;
@@ -45,9 +63,10 @@ public class Note {
     @Override
     public String toString() {
         return new ToStringBuilder(this)
-                .append("title", getTitle())
-                .append("description", getDescription())
-                .append("creationTimestamp", getCreationTimestamp())
+                .append("id", id)
+                .append("title", title)
+                .append("description", description)
+                .append("creationTimestamp", creationTimestamp)
                 .toString();
     }
 }

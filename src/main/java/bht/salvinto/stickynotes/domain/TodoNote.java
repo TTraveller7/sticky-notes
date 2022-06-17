@@ -2,8 +2,10 @@ package bht.salvinto.stickynotes.domain;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
+import javax.persistence.Entity;
 import java.time.LocalDateTime;
 
+@Entity
 public class TodoNote extends Note {
 
     private Category category;
