@@ -10,20 +10,25 @@ import java.time.LocalDateTime;
  * @author ttraveller7
  */
 
-@MappedSuperclass
+@Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name = "dtype", discriminatorType = DiscriminatorType.STRING)
 public abstract class Note {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Long id;
 
     // title of the note. should be non-empty.
+    @Column(name = "title")
     private String title;
 
+    @Column(name = "description")
     private String description;
 
     // records the time of creation
+    @Column(name = "creation_timestamp")
     private LocalDateTime creationTimestamp;
 
     public Long getId() {

@@ -2,20 +2,22 @@ package bht.salvinto.stickynotes.domain;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
+import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
+@DiscriminatorValue("todo_note")
 public class TodoNote extends Note {
 
     @Enumerated(EnumType.STRING)
+    @Column(name = "category")
     private Category category;
 
+    @Column(name = "deadline")
     private LocalDateTime deadline;
 
     @Enumerated(EnumType.STRING)
+    @Column(name = "status")
     private Status status;
 
     public Category getCategory() {
