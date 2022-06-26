@@ -5,10 +5,51 @@
     <title>Sticky notes</title>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
-          integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous"
           th:href="@{/webjars/bootstrap/5.1.3/css/bootstrap.min.css}">
 </head>
 <body>
-  <h2 th:text="'Sticky notes'">Kyaaa skadi:3</h2>
+<div class="container col-md-6 offset-md-3">
+        <!-- Header -->
+        <div class="row mt-3">
+            <h2 th:text="'Sticky Notes'">Sticky Notes</h2>
+        </div>
+
+        <!-- TodoNotes display -->
+        <div class="row row-cols-1 rounded-3 gy-2 mt-3 py-3 px-2 bg-light">
+            <div class="col">
+                <p class="h4">Today:</p>
+            </div>
+
+            <!-- table -->
+            <div class="col table-responsive">
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th>Task</th>
+                        <th>Category</th>
+                        <th>Deadline</th>
+                        <th>Status</th>
+                    </tr>
+                    </thead>
+                    <tbody class="table-group-divider">
+                        <tr th:remove="all">
+                            <td>Leetcode</td>
+                            <td>Study</td>
+                            <td></td>
+                            <td>In-Progress</td>
+                        </tr>
+
+                        <tr>
+                            <td>Wash Clothes</td>
+                            <td>Household</td>
+                            <td>19:00</td>
+                            <td>Todo</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
 </body>
 </html>
