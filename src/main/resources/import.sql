@@ -6,6 +6,7 @@ values('plain_note', 'Neque porro', 'Lquisquam est qui dolorem ipsum quia dolor 
 
 -- insert todo_note
 insert into Note(dtype, title, description, creation_timestamp, category, status)
-values('todo_note', 'June 18 tasks', 'primary task: leetcode', '2022-06-18', 'study', 'todo');
+values('todo_note', 'Spring', 'CRUD operations sec 11', '2022-06-18', 'WORK', 'TODO');
 insert into Note(dtype, title, description, creation_timestamp, category, status)
-values('todo_note', 'June 17 tasks', 'booster shot', '2022-06-17', 'misc', 'done');
+values('todo_note', 'Wash clothes', 'Wash all the clothes in the morning '
+    || 'so that they could be dry before dinner', '2022-06-17', 'MISC', 'DONE');
