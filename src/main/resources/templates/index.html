@@ -9,77 +9,82 @@
 </head>
 <body>
 <div class="container col-md-6 offset-md-3">
-        <!-- Header -->
-        <div class="row mt-3">
-            <h2 th:text="'Sticky Notes'">Sticky Notes</h2>
+    <!-- Header -->
+    <div class="row mt-3">
+        <h2 th:text="'Sticky Notes'">Sticky Notes</h2>
+    </div>
+
+    <!-- TodoNotes display -->
+    <div class="row row-cols-1 rounded-3 gy-2 mt-3 py-3 px-2 bg-light">
+        <div class="col">
+            <p class="h4">Today:</p>
         </div>
 
-        <!-- TodoNotes display -->
-        <div class="row row-cols-1 rounded-3 gy-2 mt-3 py-3 px-2 bg-light">
-            <div class="col">
-                <p class="h4">Today:</p>
-            </div>
-
-            <!-- table -->
-            <div class="col table-responsive">
-                <table class="table">
-                    <thead>
-                    <tr>
-                        <th>Task</th>
-                        <th>Category</th>
-                        <th>Deadline</th>
-                        <th>Status</th>
+        <!-- table -->
+        <div class="col table-responsive">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th scope="col" class="col-2">Status</th>
+                    <th scope="col" class="col-2">Task</th>
+                    <th scope="col" class="col-4">Description</th>
+                    <th scope="col" class="col-2">Category</th>
+                    <th scope="col" class="col-2">Deadline</th>
+                </tr>
+                </thead>
+                <tbody class="table-group-divider">
+                    <tr th:remove="all">
+                        <td><input type="checkbox"/></td>
+                        <td>Leetcode</td>
+                        <td>1 hard 3 medium</td>
+                        <td>Study</td>
+                        <td></td>
                     </tr>
-                    </thead>
-                    <tbody class="table-group-divider">
-                        <tr th:remove="all">
-                            <td>Leetcode</td>
-                            <td>Study</td>
-                            <td></td>
-                            <td>In-Progress</td>
-                        </tr>
 
-                        <tr>
-                            <td>Wash Clothes</td>
-                            <td>Household</td>
-                            <td>19:00</td>
-                            <td>Todo</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
+                    <!--@thymesVar id="todoNote" type="bht.salvinto.stickynotes.domain.TodoNote"-->
+                    <tr th:each="todoNote : ${todoNotes}">
+                        <td><input type="checkbox"/></td>
+                        <td th:text="${todoNote.title}" >Wash Clothes</td>
+                        <td th:text="${todoNote.description}" class="text-wrap">Wash all the clothes in the morning
+                            so that they could be dry before dinner</td>
+                        <td th:text="${todoNote.category}">Household</td>
+                        <td th:text="${todoNote.status}">Todo</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- PlainNotes display -->
+    <div class="row row-cols-1 rounded-3 gy-2 mt-3 py-3 px-2 bg-light">
+        <div class="col">
+            <p class="h4">Thoughts:</p>
         </div>
 
-        <!-- PlainNotes display -->
-        <div class="row row-cols-1 rounded-3 gy-2 mt-3 py-3 px-2 bg-light">
-            <div class="col">
-                <p class="h4">Thoughts:</p>
-            </div>
+        <!-- table -->
+        <div class="col table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col" class="col-4">Title</th>
+                        <th scope="col" class="col-8">Description</th>
+                    </tr>
+                </thead>
+                <tbody class="table-group-divider">
 
-            <!-- table -->
-            <div class="col table-responsive">
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th>Title</th>
-                            <th>Description</th>
-                        </tr>
-                    </thead>
-                    <tbody class="table-group-divider">
+                    <tr th:remove="all">
+                        <td>Wanna Rest</td>
+                        <td>It's time to kaibai!</td>
+                    </tr>
 
-                        <tr th:remove="all">
-                            <td>Wanna Rest</td>
-                            <td>It's time to kaibai!</td>
-                        </tr>
+                    <!--@thymesVar id="plainNote" type="bht.salvinto.stickynotes.domain.PlainNote"-->
+                    <tr th:each="plainNote : ${plainNotes}">
+                        <td th:text="${plainNote.title}">The Signifier of Elysium</td>
+                        <td th:text="${plainNote.description}" class="text-wrap">The motivation that drives our subconsciousness</td>
+                    </tr>
 
-                        <tr>
-                            <td>The Signifier of Elysium</td>
-                            <td>The motivation that drives our subconsciousness</td>
-                        </tr>
-
-                    </tbody>
-                </table>
-            </div>
+                </tbody>
+            </table>
         </div>
     </div>
 </div>
