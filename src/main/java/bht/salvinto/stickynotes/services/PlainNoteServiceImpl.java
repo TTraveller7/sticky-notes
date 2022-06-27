@@ -4,9 +4,6 @@ import bht.salvinto.stickynotes.domain.PlainNote;
 import bht.salvinto.stickynotes.repositories.PlainNoteRepository;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-
 @Service
 public class PlainNoteServiceImpl implements PlainNoteService {
     private final PlainNoteRepository plainNoteRepository;
