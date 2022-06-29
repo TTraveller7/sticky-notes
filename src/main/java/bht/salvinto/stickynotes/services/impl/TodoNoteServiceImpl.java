@@ -1,7 +1,8 @@
-package bht.salvinto.stickynotes.services;
+package bht.salvinto.stickynotes.services.impl;
 
 import bht.salvinto.stickynotes.domain.TodoNote;
 import bht.salvinto.stickynotes.repositories.TodoNoteRepository;
+import bht.salvinto.stickynotes.services.TodoNoteService;
 import org.springframework.stereotype.Service;
 
 @Service
