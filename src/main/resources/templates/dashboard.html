@@ -87,6 +87,51 @@
             </table>
         </div>
     </div>
+
+    <!-- Draft area -->
+    <div class="row row-cols-1 rounded-3 gy-2 mt-3 py-3 px-2 bg-light">
+        <div class="col">
+            <p class="h4">Draft:</p>
+        </div>
+
+        <div class="col table-responsive">
+            <div class="row row-cols-1">
+                <a href="#" class="col" th:href="@{/dashboard/create-todonote}"
+                   th:if="${isCreatingNote} != null ? not ${isCreatingNote} : true">Create a todo note +</a>
+
+                <!-- TodoNote creating form -->
+                <!--/*@thymesVar id="todoNoteCommand" type="bht.salvinto.stickynotes.commands.TodoNoteCommand"*/-->
+                <div class="col" th:if="${isCreatingNote} ?: false">
+                    <form method="post" th:action="@{/dashboard/submit-todonote}" th:object="${todoNoteCommand}">
+                        <!-- hidden input for persistence -->
+                        <input type="hidden" th:field="*{id}">
+
+                        <div class="row mt-3">
+                            <!-- todo: status dropdown -->
+                            <div class="col-4">
+                                <label for="todoNoteTitle" class="form-label">Task: </label>
+                                <input id="todoNoteTitle" type="text" class="form-control" th:field="*{title}"/>
+                            </div>
+
+                            <div class="col">
+                                <label for="todoNoteDescription" class="form-label">Description: </label>
+                                <input id="todoNoteDescription" type="text" class="form-control" th:field="*{description}"/>
+                            </div>
+                            <!-- todo: category dropdown -->
+                            <!-- todo: deadline input -->
+                        </div>
+
+                        <div class="row mt-3">
+                            <div class="col col-2 offset-10 d-grid gap-2">
+                                <button class="btn btn-outline-success">Submit</button>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 </body>
 </html>
