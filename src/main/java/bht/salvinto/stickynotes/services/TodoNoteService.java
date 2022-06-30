@@ -9,4 +9,8 @@ public interface TodoNoteService {
     TodoNoteCommand saveCommand(TodoNoteCommand todoNoteCommand);
 
     void deleteById(Long id);
+
+    TodoNoteCommand findCommandById(Long id);
+
+    TodoNote findById(Long id);
 }

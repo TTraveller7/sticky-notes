@@ -8,6 +8,8 @@ import bht.salvinto.stickynotes.repositories.TodoNoteRepository;
 import bht.salvinto.stickynotes.services.TodoNoteService;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class TodoNoteServiceImpl implements TodoNoteService {
 
@@ -40,5 +42,20 @@ public class TodoNoteServiceImpl implements TodoNoteService {
     @Override
     public void deleteById(Long id) {
         todoNoteRepository.deleteById(id);
+    }
+
+    @Override
+    public TodoNoteCommand findCommandById(Long id) {
+        return todoNoteToTodoNoteCommand.convert(findById(id));
+    }
+
+    @Override
+    public TodoNote findById(Long id) {
+        Optional<TodoNote> todoNoteOptional = todoNoteRepository.findById(id);
+        if (!todoNoteOptional.isPresent()) {
+            throw new RuntimeException("TodoNote with id " + id + "not exist");
+        }
+
+        return todoNoteOptional.get();
     }
 }

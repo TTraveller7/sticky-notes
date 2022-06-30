@@ -29,6 +29,7 @@ public class DashboardController {
         return "dashboard";
     }
 
+    /** Create a TodoNote. */
     @GetMapping("/create-todonote")
     public String createTodoNote(Model model) {
         getNotes(model);
@@ -48,6 +49,7 @@ public class DashboardController {
         return "redirect:/dashboard";
     }
 
+    /** Delete a TodoNote. */
     @GetMapping("/delete-todonote")
     public String showDeleteLink(Model model) {
         getNotes(model);
@@ -58,10 +60,31 @@ public class DashboardController {
     }
 
     @GetMapping("/todonotes/{id}/delete")
-    public String deleteTodoNote(@PathVariable String id, Model model) {
+    public String deleteTodoNote(@PathVariable String id) {
         todoNoteService.deleteById(Long.valueOf(id));
 
         return "redirect:/dashboard";
+    }
+
+    /** Edit a TodoNote. */
+    @GetMapping("/edit-todonote")
+    public String showEditLink(Model model) {
+        getNotes(model);
+
+        model.addAttribute("todoNoteState", TodoNoteState.EDIT_SELECT);
+
+        return "dashboard";
+    }
+
+    @GetMapping("/todonotes/{id}/edit")
+    public String showEditForm(@PathVariable String id, Model model) {
+        getNotes(model);
+
+        model.addAttribute("todoNoteState", TodoNoteState.EDIT_FILL);
+
+        model.addAttribute("todoNoteCommand", todoNoteService.findCommandById(Long.valueOf(id)));
+
+        return "dashboard";
     }
 
     private void getNotes(Model model) {
