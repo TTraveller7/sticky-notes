@@ -3,7 +3,9 @@ package bht.salvinto.stickynotes.converters;
 import bht.salvinto.stickynotes.commands.PlainNoteCommand;
 import bht.salvinto.stickynotes.domain.PlainNote;
 import org.springframework.core.convert.converter.Converter;
+import org.springframework.stereotype.Component;
 
+@Component
 public class PlainNoteCommandToPlainNote implements Converter<PlainNoteCommand, PlainNote> {
     @Override
     public PlainNote convert(PlainNoteCommand source) {

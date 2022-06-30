@@ -9,6 +9,7 @@
 </head>
 
 <!--/*@thymesVar id="todoNoteState" type="bht.salvinto.stickynotes.ui.states.TodoNoteState"*/-->
+<!--/*@thymesVar id="plainNoteState" type="bht.salvinto.stickynotes.ui.states.PlainNoteState"*/-->
 <body>
 <div class="container col-md-6 offset-md-3">
     <!-- Header -->
@@ -63,7 +64,7 @@
     <!-- PlainNotes display -->
     <div class="row row-cols-1 rounded-3 gy-2 mt-3 py-3 px-2 bg-light">
         <div class="col">
-            <p class="h4">Thoughts:</p>
+            <p class="h4">Notes:</p>
         </div>
 
         <!-- table -->
@@ -72,7 +73,8 @@
                 <thead>
                     <tr>
                         <th scope="col" class="col-4">Title</th>
-                        <th scope="col" class="col-8">Description</th>
+                        <th scope="col" class="col-7">Description</th>
+                        <th scope="col" class="col-1"></th>
                     </tr>
                 </thead>
                 <tbody class="table-group-divider">
@@ -80,12 +82,20 @@
                     <tr th:remove="all">
                         <td>Wanna Rest</td>
                         <td>It's time to kaibai!</td>
+                        <td></td>
                     </tr>
 
                     <!--@thymesVar id="plainNote" type="bht.salvinto.stickynotes.domain.PlainNote"-->
                     <tr th:each="plainNote : ${plainNotes}">
                         <td th:text="${plainNote.title}">The Signifier of Elysium</td>
                         <td th:text="${plainNote.description}" class="text-wrap">The motivation that drives our subconsciousness</td>
+                        <td th:switch="${plainNoteState == null ? 'DEFAULT' : plainNoteState.name()}">
+                            <a href="#" th:case="'DELETE'"
+                               th:href="@{'/dashboard/plainnotes/' + ${plainNote.id} + '/delete'}">delete</a>
+                            <a href="#" th:case="'EDIT_SELECT'"
+                               th:href="@{'/dashboard/plainnotes/' + ${plainNote.id} + '/edit'}">edit</a>
+                            <div th:case="*"></div>
+                        </td>
                     </tr>
 
                 </tbody>
@@ -99,18 +109,24 @@
             <p class="h4">Actions:</p>
         </div>
 
-        <div class="col" th:if="${todoNoteState == null ? true : todoNoteState.name() == 'DEFAULT'}">
+        <div class="col" th:if="${todoNoteState == null ? true : todoNoteState.name() == 'DEFAULT'}
+                and ${plainNoteState == null ? true : plainNoteState.name() == 'DEFAULT'}">
             <div class="row row-cols-1 gy-2">
-                <a href="#" class="col" th:href="@{/dashboard/create-todonote}">Create a task +</a>
-                <a href="#" class="col" th:href="@{/dashboard/delete-todonote}">Delete a task</a>
-                <a href="#" class="col" th:href="@{/dashboard/edit-todonote}">Edit a task</a>
+                <a href="#" class="col" th:href="@{/dashboard/todonotes/create}">Create a task +</a>
+                <a href="#" class="col" th:href="@{/dashboard/todonotes/delete}">Delete a task</a>
+                <a href="#" class="col" th:href="@{/dashboard/todonotes/edit}">Edit a task</a>
+            </div>
+            <div class="row row-cols-1 gy-2 mt-3">
+                <a href="#" class="col" th:href="@{/dashboard/plainnotes/create}">Create a note +</a>
+                <a href="#" class="col" th:href="@{/dashboard/plainnotes/delete}">Delete a note</a>
+                <a href="#" class="col" th:href="@{/dashboard/plainnotes/edit}">Edit a note</a>
             </div>
         </div>
 
         <div class="col" th:if="${todoNoteState == null ? false : todoNoteState.name() == 'CREATE' or todoNoteState.name() == 'EDIT_FILL'}">
             <!-- TodoNote creating form -->
             <!--/*@thymesVar id="todoNoteCommand" type="bht.salvinto.stickynotes.commands.TodoNoteCommand"*/-->
-            <form method="post" th:action="@{/dashboard/submit-todonote}" th:object="${todoNoteCommand}">
+            <form method="post" th:action="@{/dashboard/todonotes/submit}" th:object="${todoNoteCommand}">
                 <!-- hidden input for persistence -->
                 <input type="hidden" th:field="*{id}">
 
@@ -136,6 +152,35 @@
                     </div>
                     <!-- todo: category dropdown -->
                     <!-- todo: deadline input -->
+                </div>
+
+                <div class="row mt-3">
+                    <div class="col col-2 offset-10 d-grid gap-2">
+                        <button class="btn btn-outline-success">Submit</button>
+                    </div>
+                </div>
+
+            </form>
+        </div>
+
+        <div class="col" th:if="${plainNoteState == null ? false : plainNoteState.name() == 'CREATE' or plainNoteState.name() == 'EDIT_FILL'}">
+            <!-- PlainNote creating form -->
+            <!--/*@thymesVar id="plainNoteCommand" type="bht.salvinto.stickynotes.commands.PlainNoteCommand"*/-->
+            <form method="post" th:action="@{/dashboard/plainnotes/submit}" th:object="${plainNoteCommand}">
+                <!-- hidden input for persistence -->
+                <input type="hidden" th:field="*{id}">
+
+                <div class="row row-cols-2 gy-2">
+                    <div class="col-4">
+                        <label for="plainNoteTitle" class="form-label">Task: </label>
+                        <input id="plainNoteTitle" type="text" class="form-control" pattern=".*\S+.*" required
+                               th:field="*{title}"/>
+                    </div>
+
+                    <div class="col-10">
+                        <label for="plainNoteDescription" class="form-label">Description: </label>
+                        <textarea id="plainNoteDescription" class="form-control" th:field="*{description}"></textarea>
+                    </div>
                 </div>
 
                 <div class="row mt-3">
