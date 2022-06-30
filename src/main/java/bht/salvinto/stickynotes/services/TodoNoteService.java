@@ -7,4 +7,6 @@ public interface TodoNoteService {
     Iterable<TodoNote> findAll();
 
     TodoNoteCommand saveCommand(TodoNoteCommand todoNoteCommand);
+
+    void deleteById(Long id);
 }

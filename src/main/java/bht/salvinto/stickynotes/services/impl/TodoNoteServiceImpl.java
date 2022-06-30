@@ -36,4 +36,9 @@ public class TodoNoteServiceImpl implements TodoNoteService {
 
         return todoNoteToTodoNoteCommand.convert(savedTodoNote);
     }
+
+    @Override
+    public void deleteById(Long id) {
+        todoNoteRepository.deleteById(id);
+    }
 }

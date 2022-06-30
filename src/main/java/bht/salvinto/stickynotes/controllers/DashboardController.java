@@ -5,15 +5,13 @@ import bht.salvinto.stickynotes.domain.PlainNote;
 import bht.salvinto.stickynotes.domain.TodoNote;
 import bht.salvinto.stickynotes.services.PlainNoteService;
 import bht.salvinto.stickynotes.services.TodoNoteService;
+import bht.salvinto.stickynotes.ui.states.TodoNoteState;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
-@RequestMapping("dashboard")
+@RequestMapping({"dashboard", ""})
 public class DashboardController {
 
     private final PlainNoteService plainNoteService;
@@ -26,25 +24,18 @@ public class DashboardController {
 
     @GetMapping("")
     public String getDashboard(Model model) {
-        Iterable<TodoNote> todoNotes = todoNoteService.findAll();
-        model.addAttribute("todoNotes", todoNotes);
-
-        Iterable<PlainNote> plainNotes = plainNoteService.findAll();
-        model.addAttribute("plainNotes", plainNotes);
+        getNotes(model);
 
         return "dashboard";
     }
 
     @GetMapping("/create-todonote")
     public String createTodoNote(Model model) {
-        Iterable<TodoNote> todoNotes = todoNoteService.findAll();
-        model.addAttribute("todoNotes", todoNotes);
-
-        Iterable<PlainNote> plainNotes = plainNoteService.findAll();
-        model.addAttribute("plainNotes", plainNotes);
+        getNotes(model);
 
         model.addAttribute("todoNoteCommand", new TodoNoteCommand());
-        model.addAttribute("isCreatingNote", true);
+
+        model.addAttribute("todoNoteState", TodoNoteState.CREATE);
 
         return "dashboard";
     }
@@ -55,5 +46,29 @@ public class DashboardController {
         model.addAttribute("isCreatingNote", false);
 
         return "redirect:/dashboard";
+    }
+
+    @GetMapping("/delete-todonote")
+    public String showDeleteLink(Model model) {
+        getNotes(model);
+
+        model.addAttribute("todoNoteState", TodoNoteState.DELETE);
+
+        return "dashboard";
+    }
+
+    @GetMapping("/todonotes/{id}/delete")
+    public String deleteTodoNote(@PathVariable String id, Model model) {
+        todoNoteService.deleteById(Long.valueOf(id));
+
+        return "redirect:/dashboard";
+    }
+
+    private void getNotes(Model model) {
+        Iterable<TodoNote> todoNotes = todoNoteService.findAll();
+        model.addAttribute("todoNotes", todoNotes);
+
+        Iterable<PlainNote> plainNotes = plainNoteService.findAll();
+        model.addAttribute("plainNotes", plainNotes);
     }
 }
