@@ -25,30 +25,27 @@
             <table class="table">
                 <thead>
                 <tr>
-                    <th scope="col" class="col-2">Status</th>
-                    <th scope="col" class="col-2">Task</th>
-                    <th scope="col" class="col-4">Description</th>
-                    <th scope="col" class="col-2">Category</th>
-                    <th scope="col" class="col-2">Deadline</th>
+                    <th scope="col" class="col-4">Task</th>
+                    <th scope="col" class="col-6">Description</th>
+                    <th scope="col" class="col-1">Category</th>
+                    <th scope="col" class="col-1"></th>
                 </tr>
                 </thead>
                 <tbody class="table-group-divider">
                     <tr th:remove="all">
-                        <td><input type="checkbox"/></td>
                         <td>Leetcode</td>
                         <td>1 hard 3 medium</td>
                         <td>Study</td>
-                        <td></td>
+                        <td><input type="checkbox"/></td>
                     </tr>
 
                     <!--@thymesVar id="todoNote" type="bht.salvinto.stickynotes.domain.TodoNote"-->
                     <tr th:each="todoNote : ${todoNotes}">
-                        <td><input type="checkbox"/></td>
                         <td th:text="${todoNote.title}" >Wash Clothes</td>
                         <td th:text="${todoNote.description}" class="text-wrap">Wash all the clothes in the morning
                             so that they could be dry before dinner</td>
-                        <td th:text="${todoNote.category}">Household</td>
-                        <td th:text="${todoNote.status}">Todo</td>
+                        <td th:text="${todoNote.category.capitalizedName()}">Household</td>
+                        <td><input type="checkbox"/></td>
                     </tr>
                 </tbody>
             </table>
@@ -106,14 +103,24 @@
                         <!-- hidden input for persistence -->
                         <input type="hidden" th:field="*{id}">
 
-                        <div class="row mt-3">
-                            <!-- todo: status dropdown -->
+                        <div class="row mt-3 row-cols-2 gy-1">
                             <div class="col-4">
                                 <label for="todoNoteTitle" class="form-label">Task: </label>
-                                <input id="todoNoteTitle" type="text" class="form-control" th:field="*{title}"/>
+                                <input id="todoNoteTitle" type="text" class="form-control" pattern=".*\S+.*" required
+                                       th:field="*{title}"/>
                             </div>
 
-                            <div class="col">
+                            <div class="col-2">
+                                <label for="categoryDropdown" class="form-label">Category: </label>
+                                <select id="categoryDropdown" type="drop" class="form-control" th:field="*{category}">
+                                    <option th:remove="all">Work</option>
+                                    <option th:each="category : ${T(bht.salvinto.stickynotes.domain.Category).values()}"
+                                            th:value="${category}" th:text="${category.capitalizedName()}">Study</option>
+                                </select>
+                            </div>
+
+
+                            <div class="col-10">
                                 <label for="todoNoteDescription" class="form-label">Description: </label>
                                 <input id="todoNoteDescription" type="text" class="form-control" th:field="*{description}"/>
                             </div>
