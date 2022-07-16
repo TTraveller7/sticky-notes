@@ -6,7 +6,6 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-@DiscriminatorValue("todo_note")
 public class TodoNote extends Note {
 
     @Enumerated(EnumType.STRING)

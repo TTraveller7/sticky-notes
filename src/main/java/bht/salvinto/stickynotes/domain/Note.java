@@ -10,9 +10,7 @@ import java.time.LocalDateTime;
  * @author ttraveller7
  */
 
-@Entity
-@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@DiscriminatorColumn(name = "dtype", discriminatorType = DiscriminatorType.STRING)
+@MappedSuperclass
 public abstract class Note {
 
     @Id
