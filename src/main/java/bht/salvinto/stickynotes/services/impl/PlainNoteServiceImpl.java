@@ -16,7 +16,9 @@ public class PlainNoteServiceImpl implements PlainNoteService {
     private final PlainNoteCommandToPlainNote plainNoteCommandToPlainNote;
     private final PlainNoteToPlainNoteCommand plainNoteToPlainNoteCommand;
 
-    public PlainNoteServiceImpl(PlainNoteRepository plainNoteRepository, PlainNoteCommandToPlainNote plainNoteCommandToPlainNote, PlainNoteToPlainNoteCommand plainNoteToPlainNoteCommand) {
+    public PlainNoteServiceImpl(PlainNoteRepository plainNoteRepository,
+            PlainNoteCommandToPlainNote plainNoteCommandToPlainNote,
+            PlainNoteToPlainNoteCommand plainNoteToPlainNoteCommand) {
         this.plainNoteRepository = plainNoteRepository;
         this.plainNoteCommandToPlainNote = plainNoteCommandToPlainNote;
         this.plainNoteToPlainNoteCommand = plainNoteToPlainNoteCommand;
